@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from resilience_core.constants import C_CRITICAL, GAMMA_MAX
+from resilience_core.constants import GAMMA_MAX
 from resilience_core.coupling import CouplingMatrix
 
 

@@ -5,7 +5,6 @@ Sandpile: Γ = 0.296, Ρ_ref ≈ 0.75.
 
 from resilience_core import ResilienceCore
 
-
 GAMMA_SANDPILE = 0.296
 RHO_SANDPILE_EXPECTED = 0.75
 RHO_SANDPILE_TOLERANCE = 0.10

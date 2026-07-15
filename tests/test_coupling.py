@@ -59,3 +59,19 @@ def test_coupling_sources():
     cm.register_coupling("amazon", "amoc", 0.08)
     sources = cm.coupling_sources("amoc")
     assert sources == {"arctic": 0.10, "amazon": 0.08}
+
+
+def test_stabilising_coupling_does_not_add_load():
+    """Negative (stabilising) couplings must not increase collapse load."""
+    cm = CouplingMatrix(c_critical=0.5)
+    cm.register_coupling("deep_water", "amoc", effect=-0.30)
+    assert cm.total_load("amoc") == 0.0
+    assert cm.coupling_factor("amoc") == 1.0
+
+
+def test_mixed_coupling_only_positive_counts():
+    cm = CouplingMatrix(c_critical=0.5)
+    cm.register_coupling("arctic", "amoc", effect=0.20)   # destabilising
+    cm.register_coupling("deep_water", "amoc", effect=-0.10)  # stabilising
+    assert cm.total_load("amoc") == pytest.approx(0.20)
+    assert cm.coupling_factor("amoc") == pytest.approx(1.0 - 0.20 / 0.5)

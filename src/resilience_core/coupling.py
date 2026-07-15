@@ -34,11 +34,16 @@ class CouplingMatrix:
         self._couplings.pop((source_domain, target_domain), None)
 
     def total_load(self, target_domain: str) -> float:
-        """Sum of |C_ij| for all j pointing at *target_domain*."""
+        """Sum of destabilising (positive) C_ij contributions for *target_domain*.
+
+        Stabilising couplings (negative effect) are excluded: they reduce drift
+        and do not add to collapse risk. Using abs() here would incorrectly
+        penalise stabilising sources and reverse the documented sign semantics.
+        """
         return sum(
-            abs(v)
+            v
             for (src, tgt), v in self._couplings.items()
-            if tgt == target_domain
+            if tgt == target_domain and v > 0
         )
 
     def coupling_factor(self, target_domain: str) -> float:

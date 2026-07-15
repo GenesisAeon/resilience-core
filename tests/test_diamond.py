@@ -1,9 +1,8 @@
 """Diamond Interface compliance tests for ResilienceCore."""
 
-import math
-
 import pytest
 
+from diamond_setup.protocol import NotConvergedError
 from resilience_core.system import ResilienceCore
 
 
@@ -13,10 +12,10 @@ def core():
 
 
 def test_not_converged_raises_before_run_cycle(core):
-    with pytest.raises(Exception):
+    with pytest.raises(NotConvergedError):
         core.get_crep_state()
 
-    with pytest.raises(Exception):
+    with pytest.raises(NotConvergedError):
         core.get_utac_state()
 
 

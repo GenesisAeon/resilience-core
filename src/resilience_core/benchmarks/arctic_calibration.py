@@ -6,7 +6,6 @@ Recovery time: τ ≈ 1/|λ*| ≈ 20 system-time units (extremely slow).
 
 from resilience_core import ResilienceCore
 
-
 GAMMA_ARCTIC = 0.920
 RHO_ARCTIC_EXPECTED = 0.05
 RHO_ARCTIC_TOLERANCE = 0.02

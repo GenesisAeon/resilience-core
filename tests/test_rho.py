@@ -10,8 +10,6 @@ and physics:
   - Coupling always reduces Ρ
 """
 
-import pytest
-
 from resilience_core.constants import COLLAPSE_THRESHOLD
 from resilience_core.coupling import CouplingMatrix
 from resilience_core.eigenrate import ResilienceEigenrate

@@ -13,7 +13,6 @@ CALIBRATION TARGET: Ρ_AMOC ≈ 0.65 (CREP-Atlas estimate, from AMOC observation
 
 from resilience_core import ResilienceCore
 
-
 GAMMA_AMOC = 0.251
 # With r=1.0; update to r≈3.54 once amoc-utac timeseries data is available.
 RHO_AMOC_WITH_DEFAULT_R = 0.1834

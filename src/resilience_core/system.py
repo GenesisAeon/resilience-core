@@ -7,11 +7,10 @@ Implements all 6 Diamond methods:
 
 from __future__ import annotations
 
-import math
 from typing import Any
 
 from resilience_core.cascade import CascadeDetector, CascadeEvent
-from resilience_core.constants import COLLAPSE_THRESHOLD, GAMMA_MAX, SIGMA_PHI
+from resilience_core.constants import COLLAPSE_THRESHOLD, SIGMA_PHI
 from resilience_core.coupling import CouplingMatrix
 from resilience_core.eigenrate import ResilienceEigenrate
 from resilience_core.rho_calculator import ResilienceState, RhoCalculator
