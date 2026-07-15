@@ -1,100 +1,126 @@
-# diamond-setup
+# resilience-core — P40
 
-**Universal Python project scaffold** — generate professional, CI-ready skeletons in seconds.
+**Domänenübergreifende Systemresilienzgröße Ρ**  
+GenesisAeon Package 40 · MOR Research Collective · Johann Römer
 
-[![CI](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/diamond-setup/actions/workflows/ci.yml)
+[![CI](https://github.com/GenesisAeon/resilience-core/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/resilience-core/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-No cookiecutter, no Jinja2, no magic. Just a clean CLI that produces a fully working project — `uv sync`, `pytest`, ruff, pre-commit and CI all wired up from second one.
+---
+
+## What is Ρ?
+
+`resilience-core` implements the domain-overarching system resilience metric **Ρ** derived from UTAC (Universal Tipping Attractor Cascade) fixpoint analysis:
+
+```
+Ρ(t) = |λ*(t)| · (1 - Γ(t)/Γ_max) · (1 - Σ_j |C_ij(t)|/C_critical)
+```
+
+Three multiplicative factors:
+
+| Factor | Meaning |
+|--------|---------|
+| `\|λ*\|` = r · tanh²(σΓ) | Intrinsic return rate to attractor (Pimm 1984 engineering resilience) |
+| `1 - Γ/Γ_max` | Criticality margin — buffer before bifurcation |
+| `1 - Σ\|C_ij\|/C_crit` | Coupling penalty — external destabilisation from other domains |
+
+**Ρ → 0** when a system is simultaneously near its tipping point (Γ → Γ_max) AND receiving strong destabilising coupling (C_ij → C_critical). This formally captures **cascade collapse**.
 
 ---
 
 ## Installation
 
 ```bash
-pip install diamond-setup
+pip install resilience-core
 # or
-uv tool install diamond-setup
+uv add resilience-core
 ```
 
-## Usage
+## Quick Start
 
-```bash
-# New project with the minimal template (default)
-diamond scaffold my-lib
+```python
+from resilience_core import ResilienceCore, compute_rho
 
-# GenesisAeon preset (adds domains.yaml + entropy-table bridge)
-diamond scaffold my-physics-tool --template genesis --author "Ada Lovelace"
+# Single domain
+core = ResilienceCore(domain="amoc")
+core.run_cycle(gamma=0.251)
+print(core.get_resilience_state())
+# {'rho': 0.654, 'lambda_star': 0.254, 'recovery_time': 3.94, ...}
 
-# Preview what would be generated (no files written)
-diamond scaffold my-lib --dry-run
+# Convenience function
+rho_arctic = compute_rho(gamma=0.920, domain="arctic")  # ≈ 0.05
 
-# See all templates
-diamond list-templates
-
-# Validate any project directory
-diamond validate path/to/my-project
-diamond validate          # validates the current directory
+# With inter-domain coupling
+core_amoc = ResilienceCore(domain="amoc")
+core_amoc.run_cycle(
+    gamma=0.251,
+    coupling_updates={("arctic_ice", "amoc"): 0.15, ("amazon", "amoc"): 0.08}
+)
+print(core_amoc.get_resilience_state()["rho"])  # < 0.65 (reduced by coupling)
 ```
 
-## What you get
+## Calibrated Reference Values
 
-Running `diamond scaffold my-lib` produces:
+| Domain | Γ | Ρ | Status |
+|--------|---|---|--------|
+| Quantum bit | 0.050 | ≈ 0.90 | Very resilient |
+| Sandpile SOC | 0.296 | ≈ 0.75 | Classically robust |
+| AMOC | 0.251 | ≈ 0.65 | Moderate, geologically perturbed |
+| Arctic ERA5 | 0.920 | ≈ 0.05 | Near collapse |
 
-```
-my-lib/
-├── src/
-│   └── my_lib/
-│       └── __init__.py       # __version__ = "0.1.0"
-├── tests/
-│   ├── __init__.py
-│   └── test_main.py
-├── .github/
-│   └── workflows/
-│       └── ci.yml            # matrix: 3.11 + 3.12
-├── pyproject.toml            # hatchling, ruff, pytest configured
-├── README.md
-├── AGENT.md                  # GenesisAeon release & metadata rules
-├── .gitignore
-└── .pre-commit-config.yaml   # ruff + standard hooks
-```
+## Diamond Interface
 
-Then just:
+`ResilienceCore` implements all 6 GenesisAeon Diamond methods:
 
-```bash
-cd my-lib
-uv sync --dev
-pre-commit install
-uv run pytest
+```python
+core.run_cycle(gamma)         # Method 1: execute one step
+core.get_crep_state()         # Method 2: CREP snapshot {C, R, E, P, Gamma}
+core.get_utac_state()         # Method 3: UTAC snapshot {H, H_star, K_eff}
+core.get_phase_events()       # Method 4: near-collapse & cascade events
+core.to_zenodo_record()       # Method 5: Zenodo deposition metadata
+core.get_resilience_state()   # Method 6 (NEW): full Ρ breakdown
 ```
 
-## Templates
+`get_resilience_state()` is the **6th Diamond method** — a standard interface for all GenesisAeon packages to optionally expose via `resilience-core`.
 
-| Template | Description |
-|----------|-------------|
-| `minimal` | Clean Python package for everyone |
-| `genesis` | Adds `domains.yaml` + entropy-table bridge (GenesisAeon preset) |
+## Frame-Principle Boundary
 
-## Extending
+σ_Φ ≈ 1/16 = 0.0625 defines the collapse threshold:
 
-Adding a new template is one Python file. See [docs/templates.md](docs/templates.md).
+```python
+from resilience_core import frame_principle_report
+report = frame_principle_report(gamma=0.9, rho=0.03)
+# {'status': 'critical', 'frame_principle_warning': True, ...}
+```
 
-## Role in the GenesisAeon Ecosystem
+## Structure
 
-`diamond-setup` is **P-INFRA-1** in the GenesisAeon ecosystem registry —
-the ecosystem infrastructure / template scaffold package. It generates the
-standardized project skeletons (CI, packaging, pre-commit) used to bootstrap
-new GenesisAeon packages, including the `genesis` preset that wires in the
-`entropy-table` bridge.
+```
+resilience_core/
+├── constants.py         # σ, σ_Φ, Γ_max, C_critical
+├── eigenrate.py         # λ*(t) = -r·tanh²(σΓ)
+├── coupling.py          # CouplingMatrix: C_ij inter-domain effects
+├── cascade.py           # CascadeDetector: multi-domain collapse warning
+├── rho_calculator.py    # RhoCalculator: Ρ = |λ*|·margin·coupling_factor
+├── frame_principle.py   # σ_Φ boundary analysis
+├── system.py            # ResilienceCore — Diamond Interface main class
+└── benchmarks/          # Calibration scripts (AMOC, Arctic, Sandpile)
+```
 
 ## Citation
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.PLACEHOLDER.svg)](https://doi.org/10.5281/zenodo.PLACEHOLDER)
-
-DOI will be assigned automatically on first GitHub Release once
-Zenodo–GitHub integration is enabled for this repo.
+```bibtex
+@software{romer2026resiliencecore,
+  author       = {Römer, Johann},
+  title        = {resilience-core: UTAC-derived system resilience (Ρ)},
+  year         = 2026,
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.XXXXXXX},
+  url          = {https://github.com/GenesisAeon/resilience-core}
+}
+```
 
 ---
 
-Built with [uv](https://docs.astral.sh/uv/) · [Typer](https://typer.tiangolo.com/) · [Rich](https://rich.readthedocs.io/)
+Part of the [GenesisAeon](https://github.com/GenesisAeon) ecosystem · related: `diamond-setup` (P-INFRA-1), `scope-resilience` (P41)

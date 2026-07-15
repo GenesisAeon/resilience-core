@@ -1,10 +1,10 @@
 {
-  "title": "diamond-setup — P-INFRA-1: Universal Python project scaffold — generate professional project skeletons in seconds",
-  "description": "<p>Universal Python project scaffold — generate professional project skeletons in seconds.</p><p>Part of the <strong>GenesisAeon</strong> ecosystem (P-INFRA-1, domain: ecosystem infrastructure / template scaffold).</p><p>See <a href=\"https://github.com/GenesisAeon/diamond-setup\">github.com/GenesisAeon/diamond-setup</a> for source, documentation, and reproducibility notebooks.</p>",
+  "title": "resilience-core — P40: Domänenübergreifende Systemresilienzgröße Ρ (GenesisAeon)",
+  "description": "<p>Implements the domain-overarching system resilience metric <strong>Ρ</strong> derived from UTAC (Universal Tipping Attractor Cascade) fixpoint analysis.</p><p>Ρ(t) = |λ*(t)| · (1 - Γ(t)/Γ_max) · (1 - Σ|C_ij|/C_critical) quantifies a system's buffer capacity against destabilising perturbations — from physical tipping points (AMOC, Arctic) to semantic drift in LLMs.</p><p>Part of the <strong>GenesisAeon</strong> ecosystem (P40, domain: meta-dynamics / cross-domain).</p>",
   "creators": [
     {
       "name": "Römer, Johann",
-      "affiliation": "Independent Researcher / MOR Research Collective"
+      "affiliation": "MOR Research Collective"
     }
   ],
   "license": "MIT",
@@ -12,11 +12,15 @@
   "access_right": "open",
   "keywords": [
     "GenesisAeon",
-    "P-INFRA-1",
-    "ecosystem infrastructure",
+    "P40",
+    "resilience",
     "UTAC",
     "CREP",
-    "open science"
+    "tipping-points",
+    "complex-systems",
+    "eigenrate",
+    "coupling",
+    "cascade"
   ],
   "related_identifiers": [
     {
@@ -26,7 +30,7 @@
       "scheme": "doi"
     }
   ],
-  "version": "2.1.0",
+  "version": "1.0.0",
   "communities": [
     {
       "identifier": "genesisaeon"

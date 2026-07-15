@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use resilience-core, please cite it as below."
+type: software
+title: "resilience-core: UTAC-derived system resilience (Ρ) for GenesisAeon domains"
+version: "1.0.0"
+date-released: "2026-07-15"
+authors:
+  - family-names: Römer
+    given-names: Johann
+    affiliation: "MOR Research Collective"
+repository-code: "https://github.com/GenesisAeon/resilience-core"
+license: MIT
+keywords:
+  - resilience
+  - UTAC
+  - CREP
+  - tipping-points
+  - complex-systems
+  - GenesisAeon
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.19645351"
+    description: "GenesisAeon ecosystem DOI"
