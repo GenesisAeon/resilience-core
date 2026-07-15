@@ -23,7 +23,7 @@ LAMBDA_STAR_TOLERANCE = 0.005
 R_REQUIRED_FOR_TARGET = 3.54    # r needed to reach Ρ≈0.65; pending real data
 
 
-def run_amoc_calibration() -> dict:
+def run_amoc_calibration() -> dict[str, object]:
     """Run AMOC calibration cycle and return verification dict."""
     core = ResilienceCore(domain="amoc")
     core.run_cycle(gamma=GAMMA_AMOC)

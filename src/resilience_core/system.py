@@ -219,4 +219,4 @@ def compute_rho(
     """Convenience function: compute Ρ for a single (domain, gamma) pair."""
     core = ResilienceCore(domain=domain, r=r, sigma=sigma)
     result = core.run_cycle(gamma=gamma, coupling_updates=coupling_updates)
-    return result["rho"]
+    return float(result["rho"])

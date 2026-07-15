@@ -13,7 +13,7 @@ RECOVERY_TIME_EXPECTED = 20.0
 RECOVERY_TIME_TOLERANCE = 5.0
 
 
-def run_arctic_calibration() -> dict:
+def run_arctic_calibration() -> dict[str, object]:
     """Run Arctic calibration cycle and return verification dict."""
     core = ResilienceCore(domain="arctic_era5")
     core.run_cycle(gamma=GAMMA_ARCTIC)

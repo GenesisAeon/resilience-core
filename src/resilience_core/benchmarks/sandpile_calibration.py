@@ -10,7 +10,7 @@ RHO_SANDPILE_EXPECTED = 0.75
 RHO_SANDPILE_TOLERANCE = 0.10
 
 
-def run_sandpile_calibration() -> dict:
+def run_sandpile_calibration() -> dict[str, object]:
     core = ResilienceCore(domain="sandpile")
     core.run_cycle(gamma=GAMMA_SANDPILE)
     state = core.get_resilience_state()
