@@ -24,7 +24,9 @@ class ResilienceCore:
         core = ResilienceCore(domain="amoc")
         result = core.run_cycle(gamma=0.251)
         state = core.get_resilience_state()
-        print(state["rho"])   # ≈ 0.65
+        print(state["rho"])   # ≈ 0.18 (r=1.0 default; Atlas target 0.65
+                               # requires r≈3.54, see
+                               # benchmarks/amoc_calibration.py)
     """
 
     def __init__(
