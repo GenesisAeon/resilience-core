@@ -1,8 +1,8 @@
 """Diamond Interface compliance tests for ResilienceCore."""
 
 import pytest
-
 from diamond_setup.protocol import NotConvergedError
+
 from resilience_core.system import ResilienceCore
 
 
