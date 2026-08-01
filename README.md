@@ -6,6 +6,7 @@ GenesisAeon Package 40 · MOR Research Collective · Johann Römer
 [![CI](https://github.com/GenesisAeon/resilience-core/actions/workflows/ci.yml/badge.svg)](https://github.com/GenesisAeon/resilience-core/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21398177.svg)](https://doi.org/10.5281/zenodo.21398177)
 
 ---
 
@@ -116,7 +117,7 @@ resilience_core/
   title        = {resilience-core: UTAC-derived system resilience (Ρ)},
   year         = 2026,
   publisher    = {Zenodo},
-  doi          = {10.5281/zenodo.XXXXXXX},
+  doi          = {10.5281/zenodo.21398177},
   url          = {https://github.com/GenesisAeon/resilience-core}
 }
 ```
