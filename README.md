@@ -24,7 +24,7 @@ Three multiplicative factors:
 |--------|---------|
 | `\|λ*\|` = r · tanh²(σΓ) | Intrinsic return rate to attractor (Pimm 1984 engineering resilience) |
 | `1 - Γ/Γ_max` | Criticality margin — buffer before bifurcation |
-| `1 - Σ\|C_ij\|/C_crit` | Coupling penalty — external destabilisation from other domains |
+| `1 - Σ C_ij/C_crit` (positive contributions only) | Coupling penalty — external destabilisation from other domains |
 
 **Ρ → 0** when a system is simultaneously near its tipping point (Γ → Γ_max) AND receiving strong destabilising coupling (C_ij → C_critical). This formally captures **cascade collapse**.
 
@@ -43,14 +43,16 @@ uv add resilience-core
 ```python
 from resilience_core import ResilienceCore, compute_rho
 
-# Single domain
+# Single domain -- these are the real numbers with the r=1.0 default
+# (see "Uncalibrated defaults" below; this is not yet AMOC's real target)
 core = ResilienceCore(domain="amoc")
 core.run_cycle(gamma=0.251)
 print(core.get_resilience_state())
-# {'rho': 0.654, 'lambda_star': 0.254, 'recovery_time': 3.94, ...}
+# {'rho': 0.18337286132702, 'lambda_star': 0.2521719468174266,
+#  'recovery_time': 3.965548161167997, 'near_collapse': False, ...}
 
 # Convenience function
-rho_arctic = compute_rho(gamma=0.920, domain="arctic")  # ≈ 0.05
+rho_arctic = compute_rho(gamma=0.920, domain="arctic")  # = 0.0 (near_collapse=True)
 
 # With inter-domain coupling
 core_amoc = ResilienceCore(domain="amoc")
@@ -58,17 +60,32 @@ core_amoc.run_cycle(
     gamma=0.251,
     coupling_updates={("arctic_ice", "amoc"): 0.15, ("amazon", "amoc"): 0.08}
 )
-print(core_amoc.get_resilience_state()["rho"])  # < 0.65 (reduced by coupling)
+print(core_amoc.get_resilience_state()["rho"])  # ≈ 0.099 (reduced from 0.183 by coupling)
 ```
 
-## Calibrated Reference Values
+## Uncalibrated defaults — read this before trusting a Ρ number
 
-| Domain | Γ | Ρ | Status |
+The table below shows what `compute_rho`/`ResilienceCore` actually return
+with the **default `r=1.0`** for every domain. `r` (the intrinsic return
+rate) has not been fitted to each domain's real dynamics yet -- see
+`benchmarks/amoc_calibration.py`, which documents this openly for AMOC:
+reaching the literature-motivated target Ρ≈0.65 needs `r≈3.54`
+(`calibration_status: "OPEN — pending amoc-utac (P18) timeseries"`), not
+the default `r=1.0`, which gives Ρ≈0.18. The same caveat applies to every
+row below -- these are real, reproducible outputs of this code, not yet
+domain-calibrated targets.
+
+| Domain | Γ | Ρ (r=1.0 default) | `near_collapse` |
 |--------|---|---|--------|
-| Quantum bit | 0.050 | ≈ 0.90 | Very resilient |
-| Sandpile SOC | 0.296 | ≈ 0.75 | Classically robust |
-| AMOC | 0.251 | ≈ 0.65 | Moderate, geologically perturbed |
-| Arctic ERA5 | 0.920 | ≈ 0.05 | Near collapse |
+| Quantum bit | 0.050 | 0.01135 | **True** |
+| Sandpile SOC | 0.296 | 0.22229 | False |
+| AMOC | 0.251 | 0.18337 | False |
+| Arctic ERA5 | 0.920 | 0.0 | True |
+
+`near_collapse` is `rho < COLLAPSE_THRESHOLD`, computed by the code itself
+-- e.g. Quantum's low Γ does *not* mean high Ρ once actually computed;
+with the default r it flags as near-collapse, the opposite of an earlier
+version of this table which described it as "Very resilient."
 
 ## Diamond Interface
 
