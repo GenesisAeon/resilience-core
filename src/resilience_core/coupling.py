@@ -58,6 +58,10 @@ class CouplingMatrix:
             if tgt == target_domain
         }
 
+    def all_couplings(self) -> dict[tuple[str, str], float]:
+        """Return a defensive copy of every registered (source, target) -> effect."""
+        return dict(self._couplings)
+
     def cascade_threshold(
         self, target_domain: str, gamma: float, gamma_max: float = GAMMA_MAX
     ) -> bool:

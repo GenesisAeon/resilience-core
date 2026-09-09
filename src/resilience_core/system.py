@@ -13,6 +13,7 @@ from resilience_core.cascade import CascadeDetector, CascadeEvent
 from resilience_core.constants import COLLAPSE_THRESHOLD, SIGMA_PHI
 from resilience_core.coupling import CouplingMatrix
 from resilience_core.eigenrate import ResilienceEigenrate
+from resilience_core.graph_connectivity import NetworkConnectivity
 from resilience_core.rho_calculator import ResilienceState, RhoCalculator
 
 
@@ -41,6 +42,7 @@ class ResilienceCore:
         self.coupling = CouplingMatrix(c_critical=c_critical)
         self.calculator = RhoCalculator(self.eigenrate, self.coupling)
         self.cascade_detector = CascadeDetector(self.coupling)
+        self.connectivity = NetworkConnectivity(self.coupling)
         self._current_gamma: float | None = None
         self._history: list[ResilienceState] = []
         self._cascade_events: list[CascadeEvent] = []
@@ -194,6 +196,8 @@ class ResilienceCore:
             "near_collapse": state.near_collapse,
             "frame_principle_warn": state.rho < SIGMA_PHI,
             "coupling_sources": state.coupling_sources,
+            "algebraic_connectivity": self.connectivity.algebraic_connectivity(),
+            "fragmentation_risk": self.connectivity.is_fragmentation_risk(),
             "implemented": True,
         }
 
