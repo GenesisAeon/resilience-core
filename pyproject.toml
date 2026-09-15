@@ -1,6 +1,6 @@
 [project]
 name = "resilience-core"
-version = "1.0.0"
+version = "1.0.1"
 description = "Domänenübergreifende Systemresilienzgröße Ρ — UTAC fixpoint eigenrate + inter-domain coupling (GenesisAeon P40)"
 readme = "README.md"
 license = { text = "MIT" }
