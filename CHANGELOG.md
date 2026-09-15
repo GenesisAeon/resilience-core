@@ -2,6 +2,18 @@
 
 All notable changes to `resilience-core` (P40) are documented here.
 
+## [1.0.3] — 2026-09-15
+
+### Fixed (CI/lint only, no behavior change)
+- `CI` (ruff+mypy) had failed on every push to `main` since at least
+  2026-08-01, unnoticed because it does not gate `Release`. Two
+  vorbestehend causes: a docstring line over 100 chars in
+  `src/resilience_core/__init__.py`'s quick-start example (wrapped), and
+  an import-sort violation in `tests/test_diamond.py` (`pytest` and
+  `diamond_setup` are both third-party and now grouped together, ahead
+  of the first-party `resilience_core` import). `ruff check src tests`
+  and `mypy src` both pass clean locally after the fix.
+
 ## [1.0.2] — 2026-09-15
 
 ### Fixed (test suite only, no behavior change)

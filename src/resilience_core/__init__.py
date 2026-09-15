@@ -8,7 +8,8 @@ Quick start::
     core.run_cycle(gamma=0.251)
     print(core.get_resilience_state())
 
-    rho = compute_rho(gamma=0.920, domain="arctic")  # = 0.0 with default r (target ≈0.05 needs domain-specific r; see benchmarks/arctic_calibration.py)
+    rho = compute_rho(gamma=0.920, domain="arctic")  # = 0.0 with default r
+    # (target ≈0.05 needs domain-specific r; see benchmarks/arctic_calibration.py)
 """
 
 from resilience_core.cascade import CascadeDetector, CascadeEvent
@@ -32,7 +33,7 @@ from resilience_core.frame_principle import (
 from resilience_core.rho_calculator import ResilienceState, RhoCalculator
 from resilience_core.system import ResilienceCore, compute_rho
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __all__ = [
     "ResilienceCore",
     "compute_rho",

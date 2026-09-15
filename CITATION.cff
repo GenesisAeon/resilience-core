@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use resilience-core, please cite it as below."
 type: software
 title: "resilience-core: UTAC-derived system resilience (Ρ) for GenesisAeon domains"
-version: "1.0.2"
+version: "1.0.3"
 date-released: "2026-09-15"
 authors:
   - family-names: Römer
