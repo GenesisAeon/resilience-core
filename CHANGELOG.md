@@ -2,6 +2,17 @@
 
 All notable changes to `resilience-core` (P40) are documented here.
 
+## [1.0.2] — 2026-09-15
+
+### Fixed (test suite only, no behavior change)
+- Removed `tests/test_cli.py`, `tests/test_preset.py`,
+  `tests/test_validator.py`, `tests/test_protocol.py`: all four were
+  unmodified copies of `diamond-setup`'s own test suite (byte-identical
+  across multiple GenesisAeon packages), exercising only
+  `diamond_setup.cli`/`preset`/`validator`/`protocol` internals — none of
+  them tested any `resilience-core` code. `resilience-core` has no CLI of
+  its own, so no replacement test was needed.
+
 ## [1.0.1] — 2026-09-15
 
 ### Fixed (documentation / test honesty, no behavior change)

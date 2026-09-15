@@ -32,7 +32,7 @@ from resilience_core.frame_principle import (
 from resilience_core.rho_calculator import ResilienceState, RhoCalculator
 from resilience_core.system import ResilienceCore, compute_rho
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __all__ = [
     "ResilienceCore",
     "compute_rho",
